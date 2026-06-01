@@ -1,46 +1,72 @@
-# Astro Starter Kit: Basics
+# StockSync
+
+StockSync es una aplicación de reconciliación de inventarios construida con Astro, React y Tailwind CSS. Permite comparar dos hojas de cálculo Excel para detectar productos nuevos, modificados, agotados o sin cambios, y exportar el resultado en un reporte descargable.
+
+## 📌 Qué hace
+
+- Carga un archivo Excel con extensión `.xlsx` o `.xls`
+- Lee dos hojas obligatorias: `actual` y `antigua`
+- Extrae automáticamente las columnas disponibles de la hoja `actual`
+- Permite seleccionar la columna clave que identifica cada producto (por ejemplo, `CODIGO`)
+- Compara los datos de ambas hojas y clasifica cada fila como:
+  - `NUEVO`
+  - `MODIFICADO`
+  - `AGOTADO`
+  - `SIN CAMBIOS`
+- Muestra un resumen con totales y una vista previa de las primeras filas
+- Genera un archivo Excel con el reporte final
+
+## 🧩 Requisitos
+
+- Node.js >= 22.12.0
+- pnpm
+
+## 🚀 Scripts disponibles
+
+Usa los siguientes comandos desde la raíz del proyecto:
 
 ```sh
-pnpm create astro@latest -- --template basics
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🧪 Cómo usarlo
 
-## 🚀 Project Structure
+1. Ejecuta `pnpm install` para instalar dependencias.
+2. Inicia la aplicación con `pnpm dev`.
+3. Abre el navegador en `http://localhost:4321`.
+4. Sube un archivo Excel que contenga las hojas `actual` y `antigua`.
+5. Selecciona la columna identificadora.
+6. Haz clic en `Procesar Comparación`.
+7. Descarga el reporte final usando el botón `Descargar Reporte`.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 📄 Formato del archivo Excel
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- Hoja `actual`: datos actuales de inventario
+- Hoja `antigua`: datos anteriores de inventario
+- Ambas hojas deben compartir la misma cabecera
+- En la hoja `actual`, la app detecta las columnas y permite elegir cuál se usa como llave
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🧱 Tecnología usada
 
-## 🧞 Commands
+- Astro
+- React
+- Tailwind CSS
+- SheetJS (`xlsx`)
 
-All commands are run from the root of the project, from a terminal:
+## 🗂️ Estructura del proyecto
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+- `src/pages/index.astro` – página principal
+- `src/components/ReconciliationManager.tsx` – lógica de UI principal
+- `src/hooks/useReconciliation.ts` – comparación y exportación de datos
+- `src/components/FileUploader.tsx` – carga de archivo y selección de columna
+- `src/components/SummaryCards.tsx` – resumen de resultados
+- `src/components/PreviewTable.tsx` – vista previa de la conciliación
 
-## 👀 Want to learn more?
+## 💡 Notas
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- El archivo debe contener exactamente las hojas `actual` y `antigua`.
+- Si la hoja `actual` no tiene una columna `CODIGO`, selecciona la llave adecuada del listado.
+- El reporte exportado incluye el estado de conciliación y los detalles de los cambios.
